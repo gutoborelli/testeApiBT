@@ -3,6 +3,7 @@ node_modules/
 
 #log file
 info.log
+error.log
 
 #etc
 package-lock.json
