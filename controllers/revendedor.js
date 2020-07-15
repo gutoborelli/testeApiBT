@@ -1,5 +1,8 @@
 //arquivo de chamadas da API
 const modelRevendedor = require('../models/revendedor');
+const validacao = require('../validations/validations');
+const jwt = require('jsonwebtoken');
+
 module.exports = app => {
 
 
@@ -21,6 +24,8 @@ module.exports = app => {
     
     app.post('/revendedor', async (req, res) => {
         try {
+            await validacao.revendedorSchema.validateAsync(req.body);
+
             await modelRevendedor.novoRevendedor(req.body);
             res.status(201).json('revendedor inserido');
         } catch (err)
@@ -34,8 +39,16 @@ module.exports = app => {
 
     app.post('/revendedor/login', async (req, res) => {
         try {
-            await modelRevendedor.validaLogin(req.body);
-            res.status(200).json('Login OK!');
+            await validacao.loginSchema.validateAsync(req.body);
+
+            let result = await modelRevendedor.validaLogin(req.body);
+
+        
+            var token = jwt.sign({ id: result.id }, process.env.TOKEN_SECRET, {
+                expiresIn: 300 
+                });
+            res.set({ auth: true, token: token });
+            res.status(200).json('Login ok!');
         } catch (err)
         {
             if (!!err.errorCode)

@@ -4,7 +4,8 @@
   "description": "��p\u0000r\u0000o\u0000j\u0000e\u0000t\u0000o\u0000 \u0000t\u0000e\u0000s\u0000t\u0000e\u0000\r\u0000 \u0000",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "initialize": "node ./infra/dbschema.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,12 +19,15 @@
   },
   "homepage": "https://github.com/gutoborelli/testeApiBT#readme",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "async-middleware": "^1.2.1",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "consign": "^0.1.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",

@@ -11,5 +11,11 @@ const errorPrototypeFactory = (name) => {
 const GeneralError = errorPrototypeFactory('Erro geral');
 GeneralError.prototype = new Error();
 
+const AuthError = errorPrototypeFactory('Erro de autenticação');
+AuthError.prototype = new Error();
 
-module.exports = {GeneralError}
+
+module.exports = {
+    GeneralError,
+    AuthError
+}

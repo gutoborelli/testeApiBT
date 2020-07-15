@@ -1,5 +1,6 @@
 //arquivo de chamadas da API
 const modelCompra = require('../models/compra');
+const validacao = require('../validations/validations');
 module.exports = app => {
 
    
@@ -7,6 +8,7 @@ module.exports = app => {
     app.post('/compra', async (req, res) => 
     {
         try {
+            await validacao.compraSchema.validateAsync(req.body);
             await modelCompra.novaCompra(req.body);
             res.status(201).json('compra inserida');
         } catch (err)

