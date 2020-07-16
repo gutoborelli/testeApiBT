@@ -1,6 +1,6 @@
 require('dotenv').config();
-const customExpress = require('./config/custom-express');
-const connection = require('./infra/connection').conn;
+const customExpress = require('./src/config/custom-express');
+const connection = require('./src/infra/connection').conn;
 const app = customExpress();
 
 const runner = async() =>{
