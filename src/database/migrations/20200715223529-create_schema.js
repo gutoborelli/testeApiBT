@@ -24,7 +24,7 @@ module.exports = {
           allowNull: false
         },
         data: {
-          type: Sequelize.Date,
+          type: Sequelize.DATE,
           allowNull: false
         },      
       }, { transaction: t}),
@@ -40,7 +40,7 @@ module.exports = {
           allowNull: false
         },
         nome: {
-          type: Sequelize.STRING(6,2),
+          type: Sequelize.STRING,
           allowNull: false
         },
         email: {
@@ -58,8 +58,8 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
    return queryInterface.sequelize.transaction (t =>{
       return Promise.all(
-        [queryInterface.dropTable('compra', {transaction: t}),
-        queryInterface.dropTable('compra', {transaction: t})]);
+        [queryInterface.dropTable('compras', {transaction: t}),
+        queryInterface.dropTable('revendedores', {transaction: t})]);
   });
 }
 };

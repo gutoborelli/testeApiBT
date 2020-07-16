@@ -1,5 +1,5 @@
 //arquivo de chamadas da API
-const modelCompra = require('../models/compra');
+const uowCompra = require('../uow/compra');
 const validacao = require('../validations/validations');
 module.exports = app => {
 
@@ -9,7 +9,7 @@ module.exports = app => {
     {
         try {
             await validacao.compraSchema.validateAsync(req.body);
-            await modelCompra.novaCompra(req.body);
+            await uowCompra.novaCompra(req.body);
             res.status(201).json('compra inserida');
         } catch (err)
         {
@@ -22,7 +22,7 @@ module.exports = app => {
 
     app.get('/compra', async (req, res) => {
         try {
-            let result = await modelCompra.listarCompras();
+            let result = await uowCompra.listarCompras();
             res.status(200).json(result);
         } catch (err)
         {

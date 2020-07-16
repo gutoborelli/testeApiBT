@@ -9,7 +9,7 @@ const messageUtil = require('../helpers/error');
 
 const verificaToken = async(req, res, next) =>{
 
-    if (await isAuthRoute(req.path)) { //se a rota não precisa ser autenticada
+    if (false) { // (await isAuthRoute(req.path)) { //se a rota não precisa ser autenticada
 
         try {
             var token = req.headers['x-access-token'];
@@ -63,7 +63,7 @@ module.exports = () => {
     app.use(bodyParser.json());
     
     consign()
-        .include('controllers')
+        .include('src/controllers')
         .into(app);
     return app;
 }

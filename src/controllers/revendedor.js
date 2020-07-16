@@ -1,5 +1,5 @@
 //arquivo de chamadas da API
-const modelRevendedor = require('../models/revendedor');
+const uowRevendedor = require('../uow/revendedor');
 const validacao = require('../validations/validations');
 const jwt = require('jsonwebtoken');
 
@@ -10,7 +10,7 @@ module.exports = app => {
     app.get('/revendedor/cashback/:cpf', async (req, res) => 
     {
         try {
-            let result = await modelRevendedor.consultaCashback(req.params.cpf);
+            let result = await uowRevendedor.consultaCashback(req.params.cpf);
             res.status(200).json(result);
         } catch (err)
         {
@@ -26,7 +26,7 @@ module.exports = app => {
         try {
             await validacao.revendedorSchema.validateAsync(req.body);
 
-            await modelRevendedor.novoRevendedor(req.body);
+            await uowRevendedor.novoRevendedor(req.body);
             res.status(201).json('revendedor inserido');
         } catch (err)
         {
@@ -41,7 +41,7 @@ module.exports = app => {
         try {
             await validacao.loginSchema.validateAsync(req.body);
 
-            let result = await modelRevendedor.validaLogin(req.body);
+            let result = await uowRevendedor.validaLogin(req.body);
 
         
             var token = jwt.sign({ id: result.id }, process.env.TOKEN_SECRET, {

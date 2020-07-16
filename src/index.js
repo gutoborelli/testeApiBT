@@ -1,12 +1,10 @@
 require('dotenv').config();
-const customExpress = require('./src/config/custom-express');
-const connection = require('./src/infra/connection').conn;
+const customExpress = require('./config/custom-express');
 const app = customExpress();
 
 const runner = async() =>{
 try{
 
-    await connection.connect();
     // subindo o servidor
     app.listen(process.env.SERVER_PORT, () => console.log(`Servidor pronto na porta...${process.env.SERVER_PORT}`));
 } catch (err){

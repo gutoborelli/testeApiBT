@@ -1,8 +1,6 @@
-const conn = require('../infra/connection').conn;
-const util = require('util');
 const moment = require('moment');
-
-const query = util.promisify(conn.query).bind(conn);
+const { Compra } = require('../models');
+const db = require('../models');
 
 const novaCompra = async(payload) =>{
     let status = 'Em validação';
@@ -13,9 +11,9 @@ const novaCompra = async(payload) =>{
 
     let mappedPayload = {...payload, status, data};
     
-    SQL = "INSERT INTO compra SET ?"
+    console.log(Compra);
+    await Compra.create(mappedPayload);
 
-    let res = await query(SQL, mappedPayload);
 }
 
 const listarCompras = async() =>{
@@ -24,17 +22,17 @@ const listarCompras = async() =>{
     FROM compra cp
     INNER JOIN (SELECT sum(valor) AS valorAcum, 
                     CPF, 
-                    year(data) * 100 + month(data) as dataIndex 
+                    strftime('%Y',data)  +  strftime('%m',data) as dataIndex 
                 FROM compra 
                 GROUP BY CPF, dataIndex) sub
     ON cp.CPF = sub.CPF 
-        AND sub.dataIndex = year(cp.data) * 100 + month(cp.data)`
+        AND sub.dataIndex =  strftime('%Y',cp.data)  +  strftime('%m',cp.data)`
 
-        let resDB = await query(SQL);
+    let resDB = await db.sequelize.query(SQL);
 
     let perc;
     let cashback;
-    let res = resDB.map(rec => {
+    let res = resDB[0].map(rec => {
         switch (true){
             case (rec.valorAcum <= 1000):
                 perc = '10%';
