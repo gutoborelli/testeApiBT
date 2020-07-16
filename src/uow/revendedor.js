@@ -1,15 +1,11 @@
-const conn = require('../infra/connection').conn;
-const util = require('util');
 const ax = require('axios');
 const messageUtil = require('../helpers/error');
-
-const query = util.promisify(conn.query).bind(conn);
+const { Revendedor } = require('../models');
 
 const novoRevendedor = async(payload) =>{
     
-    SQL = "INSERT INTO revendedor SET ?"
-
-    let res = await query(SQL, payload);
+    await Revendedor.create(payload);
+    
 }
 
 const validaLogin = async(payload) =>{
@@ -20,13 +16,13 @@ const validaLogin = async(payload) =>{
             id:0
         }
     }
-
-
-    SQL = `SELECT id FROM revendedor 
-        WHERE email = ?
-        AND senha = ?`;
-
-    let res = await query(SQL, [payload.email, payload.senha]);
+    
+    let res = Revendedor.findOne({
+        where: {
+            email: payload.email,
+            senha: payload.senha
+        }
+    });
     if (res.length > 0)
     {
         return res[0];
