@@ -1,4 +1,6 @@
-require('dotenv').config();
+require('dotenv').config(
+    {path: process.env.NODE_ENV === 'test' ? '.test.env' : '.env'}
+);
 const customExpress = require('./config/custom-express');
 const app = customExpress();
 

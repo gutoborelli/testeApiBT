@@ -17,15 +17,15 @@ const validaLogin = async(payload) =>{
         }
     }
     
-    let res = Revendedor.findOne({
+    let res = await Revendedor.findOne({
         where: {
             email: payload.email,
             senha: payload.senha
         }
     });
-    if (res.length > 0)
+    if (!!res)
     {
-        return res[0];
+        return res;
     }
     else {
         throw new messageUtil.GeneralError('Login Inválido', 401);
