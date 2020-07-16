@@ -5,5 +5,8 @@ node_modules/
 info.log
 error.log
 
+#databases
+database.sqlite
+
 #etc
 package-lock.json
