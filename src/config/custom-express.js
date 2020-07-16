@@ -9,7 +9,7 @@ const messageUtil = require('../helpers/error');
 
 const verificaToken = async(req, res, next) =>{
 
-    if (false) { // (await isAuthRoute(req.path)) { //se a rota não precisa ser autenticada
+    if (await isAuthRoute(req.path)) { //se a rota não precisa ser autenticada
 
         try {
             var token = req.headers['x-access-token'];
