@@ -1,4 +1,6 @@
-require('dotenv').config();
+require('dotenv').config(
+  {path: process.env.NODE_ENV === 'test' ? '.test.env' : '.env'}
+);
 
 module.exports = {
   host: process.env.DB_ENDPOINT,

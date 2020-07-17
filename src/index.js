@@ -1,4 +1,7 @@
-require('dotenv').config();
+require('dotenv').config(
+    {path: process.env.NODE_ENV === 'test' ? '.test.env' : '.env'}
+);
+const logger = require('../logger').getDefaultLogger();
 const customExpress = require('./config/custom-express');
 const app = customExpress();
 
@@ -6,16 +9,18 @@ const runner = async() =>{
 try{
 
     // subindo o servidor
-    app.listen(process.env.SERVER_PORT, () => console.log(`Servidor pronto na porta...${process.env.SERVER_PORT}`));
+    app.listen(process.env.SERVER_PORT, () => logger.info(`Servidor pronto na porta...${process.env.SERVER_PORT}`));
 } catch (err){
-    console.log (err);
+    logger.error (err);
 }}
 
 
 runner().then(
-    res => {},
+    () => {
+        logger.info('Servidor finalizado!');
+    },
     err =>{
-        console.log(err);
+        logger.error(err);
     }
 
 );

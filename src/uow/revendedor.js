@@ -17,15 +17,15 @@ const validaLogin = async(payload) =>{
         }
     }
     
-    let res = Revendedor.findOne({
+    let res = await Revendedor.findOne({
         where: {
             email: payload.email,
             senha: payload.senha
         }
     });
-    if (res.length > 0)
+    if (!!res)
     {
-        return res[0];
+        return res;
     }
     else {
         throw new messageUtil.GeneralError('Login Inválido', 401);
@@ -33,9 +33,13 @@ const validaLogin = async(payload) =>{
 }
 
 const consultaCashback = async(cpf) =>{
-    const fullPath = process.env.EXT_ENDPOINT + `?cpf=${cpf}`
 
-    let res = await ax.get(fullPath, {headers: {token: 'ZXPURQOARHiMc6Y0flhRC1LVlZQVFRnm'}})
+    let CPFLimpo = cpf.replace(/\./g,'').replace(/-/g,'');
+    
+    const fullPath = `${process.env.EXT_ENDPOINT}?cpf=${CPFLimpo}`
+
+    // recupera os dados da API externa
+    let res = await ax.get(fullPath, {headers: {token: process.env.EXT_TOKEN}})
 
     if (res.data.statusCode !=200)
     {

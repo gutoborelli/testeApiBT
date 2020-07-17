@@ -19,7 +19,7 @@ const consoleLogger = winston.createLogger({
                 }))
         }),
         new winston.transports.File({
-            filename: 'info.log',
+            filename: 'log/info.log',
             format: winston.format.combine(                
                 winston.format.timestamp(),
                 winston.format.align(),
@@ -33,7 +33,7 @@ const consoleLogger = winston.createLogger({
                 }))
         }),
         new winston.transports.File({
-            filename: 'error.log',
+            filename: 'log/error.log',
             level: 'error',
             format: winston.format.combine(                
                 winston.format.timestamp(),

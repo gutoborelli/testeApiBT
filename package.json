@@ -5,7 +5,9 @@
   "scripts": {
     "start": "nodemon src/index.js",
     "initialize": "./node_modules/.bin/sequelize db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "set NODE_ENV=test&&sequelize db:migrate",
+    "test": "set NODE_ENV=test&&jest",
+    "posttest": "set NODE_ENV=test&&sequelize db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
@@ -25,14 +27,24 @@
     "consign": "^0.1.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jest": "^26.1.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
-    "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
     "sequelize": "^6.3.3",
     "sequelize-cli": "^6.2.0",
     "sqlite3": "^5.0.0",
+    "supertest": "^4.0.2",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-config-strongloop": "^2.1.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
   }
 }
