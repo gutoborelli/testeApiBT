@@ -6,7 +6,7 @@ const routes = [
 
 const isAuthRoute = async(route) => {
 
-    item = _.find(routes, {'name': route}   )
+    let item = _.find(routes, {'name': route}   )
 
     if (!item) // se não encontra a rota na lista, automaticamente a rota deve ser autenticada
         return true;

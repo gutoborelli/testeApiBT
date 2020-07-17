@@ -41,7 +41,7 @@ describe('Revendedor', () => {
         expect (response.status).toBe(401);
     });
 
-    it('Deve retornar 200 ao cadastrar um novo revendedor', async () =>{
+    it('Deve retornar 201 ao cadastrar um novo revendedor', async () =>{
         const response = await request(app)
             .post('/revendedor')
             .set({ 'x-access-token': token })
@@ -50,7 +50,7 @@ describe('Revendedor', () => {
                 email: 'bbbb@aaa.com',
                 CPF: '123.456.789-99',
                 senha: 'aaaaaaaa' });
-                console.log(response.body);
+                
         expect (response.status).toBe(201);
     });
 
@@ -59,7 +59,15 @@ describe('Revendedor', () => {
             .post('/revendedor/login')
             .set({ 'x-access-token': token })
             .send({email:'bbbb@aaa.com', senha:'aaaaaaaa'});
-            console.log(response.body);
+            
+        expect (response.status).toBe(200);
+    });    
+
+    it('Deve retornar 200 ao listar o cashback', async () =>{
+        const response = await request(app)
+            .get('/revendedor/cashback/123.456.789-99')
+            .set({ 'x-access-token': token })
+            .send();
         expect (response.status).toBe(200);
     });    
     

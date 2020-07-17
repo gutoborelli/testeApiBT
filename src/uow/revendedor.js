@@ -33,9 +33,13 @@ const validaLogin = async(payload) =>{
 }
 
 const consultaCashback = async(cpf) =>{
-    const fullPath = process.env.EXT_ENDPOINT + `?cpf=${cpf}`
 
-    let res = await ax.get(fullPath, {headers: {token: 'ZXPURQOARHiMc6Y0flhRC1LVlZQVFRnm'}})
+    let CPFLimpo = cpf.replace(/\./g,'').replace(/-/g,'');
+    
+    const fullPath = `${process.env.EXT_ENDPOINT}?cpf=${CPFLimpo}`
+
+    // recupera os dados da API externa
+    let res = await ax.get(fullPath, {headers: {token: process.env.EXT_TOKEN}})
 
     if (res.data.statusCode !=200)
     {
